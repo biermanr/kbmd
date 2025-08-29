@@ -1,0 +1,43 @@
+[project]
+name = "kbmd"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Rob Bierman", email = "rbierman@princeton.edu" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "gitpython>=3.1.45",
+    "pydantic>=2.11.7",
+]
+
+[project.scripts]
+kbmd = "kbmd.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.17.1",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+]
+
+[tool.mypy]
+files = "src/kbmd"
+strict = true
+
+[tool.ruff.lint]
+extend-select = ["D"]
+extend-ignore = ["D401"]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+docstring-code-line-length = 80
