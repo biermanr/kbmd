@@ -11,17 +11,17 @@ def main() -> None:
     )
     subparsers = parser.add_subparsers(dest="command")
 
-    # Stub for "status" command
     subparsers.add_parser(
         "status",
         help="Display information about available knowledgebases and which knowledgebase is currently active",
     )
 
-    # Stub for "add" command
     subparsers.add_parser(
-        "add", help="Add a new project or dataset to the knowledgebase"
+        "init",
+        help="Initialize the current git-managed folder to include a knowledgebase",
     )
-    # TODO: add arguments for "add"
+
+    subparsers.add_parser("build", help="Build or compile the knowledgebase content")
 
     # Stub for "push" command
     subparsers.add_parser("push", help="Push local changes to remote repository")

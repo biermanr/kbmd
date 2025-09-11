@@ -1,10 +1,21 @@
 # kbmd
+
 Knowledgebase markdown CLI tool
 
-I am considering creating a new command line interface tool called kb that helps people create and manage "knowledgebases" from the command line but I want to be careful not to reinvent the wheel.
-The idea of this tool is to help manage metadata about shared files and folders. 
+## Configuration
 
-For example in my use case I help researchers in a biology lab keep track of data on a shared HPC cluster. 
+The knowledgebase will be a git repository with a special folder called `.kbmd/` which will contain
+configuration files such as templates, as well as the contents of the knowledgebase.
+
+This folder will be created by `kbmd init` from within a git-managed folder at the top level.
+
+
+## Planning
+
+I am considering creating a new command line interface tool called kb that helps people create and manage "knowledgebases" from the command line but I want to be careful not to reinvent the wheel.
+The idea of this tool is to help manage metadata about shared files and folders.
+
+For example in my use case I help researchers in a biology lab keep track of data on a shared HPC cluster.
 We have access to folders on multiple file-systems, say /scratch, /projects, and /cold. We also have data in cloud storage.
 It can be difficult to remember what datasets are a where which sometimes leads to multiple researchers downloading their own copies of the same large files which can lead to file system issues and makes collaboration difficult. Furthermore, it's not uncommon to find a large subfolder say /projects/myproject1 created by a researcher that stores 20TB of data and scripts, but doesn't have a README or any associated metadata.
 
