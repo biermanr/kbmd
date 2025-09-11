@@ -15,6 +15,7 @@ def test_init_in_git_repo_success(tmp_path, monkeypatch):
     init_kb()
 
     assert (tmp_path / ".kbmd").exists()
+    assert tmp_path.joinpath(".kbmd", "root.jinja").exists()
 
 
 def test_init_not_git_fails(tmp_path, monkeypatch):
