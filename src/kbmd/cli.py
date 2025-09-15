@@ -2,6 +2,9 @@
 
 import argparse
 from kbmd import config
+from kbmd.subcommands.init import init_kb
+from kbmd.subcommands.add import add_entry
+from kbmd.subcommands.build import build_kb
 
 
 def main() -> None:
@@ -19,6 +22,23 @@ def main() -> None:
     subparsers.add_parser(
         "init",
         help="Initialize the current git-managed folder to include a knowledgebase",
+    )
+
+    # Add command
+    add_parser = subparsers.add_parser(
+        "add", help="Add a new dataset or project to the knowledgebase"
+    )
+    add_parser.add_argument(
+        "path",
+        nargs="?",
+        default=".",
+        help="Path to the dataset or project (default: current directory)",
+    )
+    add_parser.add_argument(
+        "--type",
+        choices=["dataset", "project"],
+        required=True,
+        help="Type of entry to create",
     )
 
     subparsers.add_parser("build", help="Build or compile the knowledgebase content")
@@ -43,6 +63,12 @@ def main() -> None:
                 print(f"  - {kb_name}: {kb_info}")
         else:
             print("No knowledgebases configured.")
+    elif args.command == "init":
+        init_kb()
+    elif args.command == "add":
+        add_entry(args.path, args.type)
+    elif args.command == "build":
+        build_kb()
 
 
 if __name__ == "__main__":

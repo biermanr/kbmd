@@ -1,5 +1,6 @@
 """Test initialization of markdown knowledgebases."""
 
+import json
 import pytest
 import pathlib
 import git
@@ -14,8 +15,37 @@ def test_init_in_git_repo_success(tmp_path, monkeypatch):
 
     init_kb()
 
-    assert (tmp_path / ".kbmd").exists()
-    assert tmp_path.joinpath(".kbmd", "root.jinja").exists()
+    # Check basic structure
+    kbmd_dir = tmp_path / ".kbmd"
+    assert kbmd_dir.exists()
+
+    # Check directory structure
+    assert (kbmd_dir / "templates").exists()
+    assert (kbmd_dir / "data").exists()
+    assert (kbmd_dir / "data" / "datasets").exists()
+    assert (kbmd_dir / "data" / "projects").exists()
+    assert (kbmd_dir / "data" / "indices").exists()
+    assert (kbmd_dir / "generated").exists()
+    assert (kbmd_dir / "generated" / "datasets").exists()
+    assert (kbmd_dir / "generated" / "projects").exists()
+    assert (kbmd_dir / "generated" / "indices").exists()
+
+    # Check templates were copied
+    assert (kbmd_dir / "templates" / "root.jinja").exists()
+    assert (kbmd_dir / "templates" / "dataset.jinja").exists()
+    assert (kbmd_dir / "templates" / "project.jinja").exists()
+    assert (kbmd_dir / "templates" / "index.jinja").exists()
+
+    # Check config file was created
+    config_file = kbmd_dir / "config.json"
+    assert config_file.exists()
+    config_data = json.loads(config_file.read_text())
+    assert "name" in config_data
+    assert "git_repo_path" in config_data
+
+    # Check initial index files were created
+    assert (kbmd_dir / "data" / "indices" / "by-filesystem.json").exists()
+    assert (kbmd_dir / "data" / "indices" / "by-topic.json").exists()
 
 
 def test_init_not_git_fails(tmp_path, monkeypatch):
